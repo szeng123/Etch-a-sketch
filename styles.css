@@ -1,19 +1,37 @@
-#grid {
-    width: 500px;
-    height: 500px;
+/* Create variables for Javascript to overwrite later (1)*/
+:root {
+    --grid-rows: 1;
+    --grid-columns: 1;
+}
+
+#grid-space {
+    /* CSS grid properties */
+    display: grid;
+
+    /*New --grid-XXX values from javascript file is now used (3) */
+    grid-template-rows: repeat(var(--grid-rows), 1fr); /* repeats X number of times with 1 fr (1 fraction piece of the total space per element)  */
+    grid-template-columns: repeat(var(--grid-columns), 1fr); /* repeat process for columns */
+    
+    /* horizontally center div */
+    margin: auto;
+
+    width: 600px;
+    height: 600px;
+    border: 1px solid red;
 }
 
 
-.box {
-    display: inline-block;
-    box-sizing: border-box;
+.grid-item {
 
     /* use outline instead of border to avoid gaps/overlaps of each cell*/
     outline: 1px solid ;
     /*adds space to each cell to avoid border overlap */
     margin-top: 1px;
-    margin-right: 1px;
-    /*size of each cell */
-    width: 50px;
-    height: 50px;
+    margin-right: 1px;    
+    text-align: center;
+}
+
+
+.color {
+    background-color: aqua;
 }
