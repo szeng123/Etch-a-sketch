@@ -24,16 +24,21 @@ let reset = document.getElementById('reset');
 function newGridSize() {
     while (true) {
         let size = prompt('Please enter the new size of the grid (1-100).');
-        if ((typeof size == null)||(typeof size !== 'number')) {
-            console.log('Please enter a number! ');
-        } else if ((size < 1) || (size > 100)) {
-            console.log('Please enter a valid number! ');
-        } else {
-            console.log('valid');
-            break;
+            if (isNaN(size)) {
+                console.log('Not a number!');
+            } else if ((size === null)||(size === '0')){
+                console.log('Entered nothing, 0 or cancelled');
+                break;
+            } else {
+                size = parseInt(size);
+                if ((size < 1)||(size > 100)) {
+                    console.log('Please enter a valid number!');
+                } else {
+                    console.log('valid number! You chose a grid size of ' + size);
+                    break;
+                }
+            }
         }
-        }
-
 }
 
 reset.addEventListener('click', newGridSize);
