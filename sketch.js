@@ -34,18 +34,25 @@ function newGridSize() {
                 if ((size < 1)||(size > 100)) {
                     console.log('Please enter a valid number!');
                 } else {
-                    console.log('valid number! You chose a grid size of ' + size);
+                    clearGrid();
+                    grid(size);
                     break;
-                }
-            }
-        }
-}
+                };
+            };
+        };
+};
 
-reset.addEventListener('click', newGridSize);
+function clearGrid() {
+    document.querySelectorAll('.grid-item').forEach((e) => e.parentNode.removeChild(e));
+};
+
 
 
 initialGrid();
 
+reset.addEventListener('click', function(){
+    newGridSize();
+});
 
 
 
