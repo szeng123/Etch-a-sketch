@@ -1,4 +1,5 @@
 const container = document.getElementById('grid-space');
+let chosenColor = 0;
 
 function grid(dimension) {
     //Create CSS variables to overwrite old value in CSS files (2) 
@@ -8,7 +9,7 @@ function grid(dimension) {
     //Generate X number of grids
     for (i = 0; i < (dimension * dimension); i++) {
         let cell = document.createElement("div");
-        cell.innerText = (i + 1);
+        //cell.innerText = (i + 1);
         container.appendChild(cell);
         cell.classList.add("grid-item");
     };
@@ -16,6 +17,7 @@ function grid(dimension) {
 
 function initialGrid() {
     grid(16);
+    changeColor();
 }
 
 // New grid button
@@ -36,6 +38,7 @@ function newGridSize() {
                 } else {
                     clearGrid();
                     grid(size);
+                    changeColor();
                     break;
                 };
             };
@@ -50,19 +53,76 @@ function clearGrid() {
 
 initialGrid();
 
+//buttons 
 reset.addEventListener('click', function(){
     newGridSize();
 });
 
+let colorButton = document.getElementById('blue');
+let rainbowButton = document.getElementById('rgb');
+let greyButton = document.getElementById('grey-scale');
+
+colorButton.addEventListener('click', function(){
+    chosenColor = colorButton.innerText;
+    console.log(chosenColor);
+});
+
+rainbowButton.addEventListener('click', function(){
+    chosenColor = rainbowButton.innerText;
+    console.log(chosenColor);
+});
+
+greyButton.addEventListener('click', function(){
+    chosenColor = greyButton.innerText;
+    console.log(chosenColor);
+});
 
 
 //Change grid colors 
-let gridArray = document.getElementsByClassName('grid-item');
+function changeColor(){
+    let gridArray = document.getElementsByClassName('grid-item');
 
-let changeColor = function() {
-    event.target.classList.add('color');
+    let addColor = function() {
+        switch(chosenColor){
+            case 'blue':
+                event.target.classList.add('color');
+                event.target.style.background = 'blue';
+                break;
+            case 'Rainbow':
+                event.target.classList.add('rgb');
+                event.target.style.background = randomRGB();
+                break;
+            case 'Grey Scale':
+                event.target.classList.add('grey-scale');
+                greyScale();
+                break;
+            default: 
+                event.target.classList.add('color');
+                event.target.style.background = 'blue';
+        };
+    };
+    for (k = 0; k < gridArray.length; k++) {
+        gridArray[k].addEventListener('mouseover', addColor, false);
+    };
 };
 
-for (k = 0; k < gridArray.length; k++) {
-    gridArray[k].addEventListener('mouseover', changeColor, false);
-}
+function randomRGB(){
+    var x = Math.floor(Math.random() * 256);
+    var y = Math.floor(Math.random() * 256);
+    var z = Math.floor(Math.random() * 256);
+    var bgColor = "rgb(" + x + "," + y + "," + z + ")";
+    return bgColor;
+};
+ 
+function greyScale(){
+    let targetCell = document.getElementById('grey-scale');
+    targetCell.style.background = 'black';
+    let currentOpacity = targetCell.style.opacity = 0.1;
+
+    function increaseOpacity() {
+        if (currentOpacity >= 0.1) {
+        targetCell.style.opacity = currentOpacity + 0.1;
+        currentOpacity += 0.1;
+        };
+    };
+};
